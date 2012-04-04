@@ -1,7 +1,7 @@
 === Wordpress Football Leagues ===
 Contributors: ajthomascouk
 Tags: widget, football, soccer
-Stable tag: 0.1.3
+Stable tag: 0.1.4
 
 It's here, the plugin thats been missing from wordpress! A plugin to display a football league table, specified by you. 
 
@@ -19,7 +19,7 @@ New leagues will be added in future releases.
 
 == Installation ==
 
-Installing Ninja Forms Lite is really simple:
+Installing Wordpress Football Leagues is really simple:
 
 1. Upload the plugin folder (i.e. wp-football-leagues) to the /wp-content/plugins/ directory of your WordPress installation.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
