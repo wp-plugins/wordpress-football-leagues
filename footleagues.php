@@ -3,7 +3,7 @@
 Plugin Name: WordPress Football Leagues
 Plugin URI: http://ajthomas.co.uk/wp-football-leagues
 Description: A plugin to desplay the a chosen football league.
-Version: 0.1
+Version: 0.1.2
 Author: Alex Thomas
 Author URI: http://ajthomas.co.uk
 License: A "Slug" license name e.g. GPL2
