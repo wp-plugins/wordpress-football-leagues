@@ -1,9 +1,9 @@
 === Wordpress Football Leagues ===
 Contributors: ajthomascouk
 Tags: widget, football, soccer
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 
-A plugin to display the a chosen football league. 
+It's here, the plugin thats been missing from wordpress! A plugin to display a football league table, specified by you. 
 
 
 == Description ==
@@ -51,3 +51,7 @@ Added readme.txt - this should have been in there anyway, our bad!
 = 0.1.2 =
 * Made more amends to the readme.txt.
 * Added screen shots
+
+= 0.1.3 =
+* Made more amends to the readme.txt.
+* updated version number, now should show correctly
