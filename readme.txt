@@ -56,5 +56,5 @@ Added readme.txt - this should have been in there anyway, our bad!
 * Made more amends to the readme.txt.
 * updated version number, now should show correctly
 
-= 0.1.3 =
+= 0.1.4 =
 Small update to readme.txt
