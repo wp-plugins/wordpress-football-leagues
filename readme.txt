@@ -1,11 +1,21 @@
 === Wordpress Football Leagues ===
-Contributors: ajthomas
+Contributors: ajthomascouk
+Tags: widget, football, soccer
+Stable tag: 0.1.2
+
+A plugin to display the a chosen football league. 
 
 
 == Description ==
 Wordpress Football Leagues allows you to select a football league to show on you site as a widget. You can select the number of teams to
 show, thus allowing the widget to be placed is small footers. The widget is currently limited to the English professional leagues.
 New leagues will be added in future releases.
+
+== Screenshots ==
+
+1. Wordpress Football Leagues - Widget settings
+2. Wordpress Football Leagues - Widget view
+
 
 == Installation ==
 
@@ -37,3 +47,7 @@ First release of Wordpress Football Leages. Currently limited to English proffes
 
 = 0.1.1 =
 Added readme.txt - this should have been in there anyway, our bad!
+
+= 0.1.2 =
+* Made more amends to the readme.txt.
+* Added screen shots
