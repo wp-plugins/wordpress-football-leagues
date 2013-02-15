@@ -69,3 +69,6 @@ Small update to readme.txt
 
 = 0.2.1 =
 Added a donate link.
+
+= 0.3 =
+* WORKING AGAIN - Sorry for the delay.
