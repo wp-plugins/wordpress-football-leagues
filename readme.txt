@@ -2,7 +2,7 @@
 Contributors: ajthomascouk
 Donate link: http://bit.ly/HdTc5Q
 Tags: widget, football, soccer
-Stable tag: 0.3
+Stable tag: 0.3.1
 
 It's here, the plugin thats been missing from wordpress! A plugin to display a football league table, specified by you. 
 
@@ -72,3 +72,6 @@ Added a donate link.
 
 = 0.3 =
 * WORKING AGAIN - Sorry for the delay.
+
+= 0.3.1 =
+* Fixed error when installing
