@@ -2,21 +2,21 @@
 Contributors: ajthomascouk
 Donate link: http://bit.ly/HdTc5Q
 Tags: widget, football, soccer
-Stable tag: 0.4
+Stable tag: 0.4.1
 
 It's here, the plugin thats been missing from wordpress! A plugin to display a football league table, specified by you. 
 
 
 == Description ==
 Wordpress Football Leagues allows you to select a football league to show on you site as a widget. You can select the number of teams to
-show, thus allowing the widget to be placed is small footers. The widget is currently limited to the English professional leagues.
+show, thus allowing the widget to be placed is small footers. You can also Highlight your favourite team. The widget is currently limited to the English professional leagues.
 New leagues will be added in future releases.
 
 == Screenshots ==
 
 1. Wordpress Football Leagues - Widget settings
-2. Wordpress Football Leagues - Widget view
-3. Wordpress Football Leagues - Widget view - Limited to top 8 clubs.
+2. Wordpress Football Leagues - Widget view - Shows Pld, Won, Goal Dif & Pts
+3. Wordpress Football Leagues - Widget view - Limited to top 6 clubs. Shows Games won.
 
 
 == Installation ==
@@ -31,7 +31,7 @@ Installing Wordpress Football Leagues is really simple:
 
 == Use ==
 
-Worpress Football Leagues is very easy to use, however if you do get stuck or have any questions, see http://ajthomas.co.uk/footballleagues for more information.
+Worpress Football Leagues is very easy to use, however if you do get stuck or have any questions, see http://www.ajthomas.co.uk/footballleagues for more information.
 
 
 == Help / Bugs ==
@@ -44,22 +44,30 @@ If you have any requests, please post a comment at http://ajthomas.co.uk/footbal
 
 == Changelog ==
 
-= 0.1 =
-First release of Wordpress Football Leages. Currently limited to English proffesional leagues.
+= 0.4.1 =
+So here it is, the new (and improved!) WP Football Leagues.
 
-= 0.1.1 =
-Added readme.txt - this should have been in there anyway, our bad!
+I've totally changed the way the leagues are generated. The widget now uses JSON to retrieve and display the league based on your requirements.
 
-= 0.1.2 =
-* Made more amends to the readme.txt.
-* Added screen shots
+NEW/UPDATED FEATURES:
+* You decide what to display on the table
+* Limit the number of clubs shown
+* highlight your club
 
-= 0.1.3 =
-* Made more amends to the readme.txt.
-* updated version number, now should show correctly
+= 0.4 =
+Brand new version. More updates coming soon
 
-= 0.1.4 =
-Small update to readme.txt
+= 0.3.2 =
+* Forgot to tag
+
+= 0.3.1 =
+* Fixed error when installing
+
+= 0.3 =
+* WORKING AGAIN - Sorry for the delay.
+
+= 0.2.1 =
+Added a donate link.
 
 = 0.2 =
 * Full codebase change.
@@ -67,17 +75,19 @@ Small update to readme.txt
 * Removed option to 'hide' title, simply dont type a title to not show one
 * updated screen shots.
 
-= 0.2.1 =
-Added a donate link.
+= 0.1.4 =
+Small update to readme.txt
 
-= 0.3 =
-* WORKING AGAIN - Sorry for the delay.
+= 0.1.3 =
+* Made more amends to the readme.txt.
+* updated version number, now should show correctly
 
-= 0.3.1 =
-* Fixed error when installing
+= 0.1.2 =
+* Made more amends to the readme.txt.
+* Added screen shots
 
-= 0.3.2 =
-* Forgot to tag
+= 0.1.1 =
+Added readme.txt - this should have been in there anyway, our bad!
 
-= 0.4 =
-Brand new version. More updates coming soon
+= 0.1 =
+First release of Wordpress Football Leages. Currently limited to English proffesional leagues.
