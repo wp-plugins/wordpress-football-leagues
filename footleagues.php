@@ -24,283 +24,235 @@ License: A "Slug" license name e.g. GPL2
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+if (is_admin()):
+   wp_register_script( 'wpfl-admin-js', plugin_dir_url( __FILE__ ).'admin/footleagues-admin.js', array( 'jquery' ), '', true );
+   wp_enqueue_script('wpfl-admin-js');
+   wp_register_style( 'wpfl-admin-css', plugin_dir_url( __FILE__ ).'admin/footleagues-admin.css');
+   wp_enqueue_style('wpfl-admin-css');
+endif;
+   wp_register_style( 'wpfl-css', plugin_dir_url( __FILE__ ).'footleagues.css');
+   wp_enqueue_style('wpfl-css');
 
-//include (WP_PLUGIN_DIR . '/wp-football-leagues/getteams.php');
-
-function init_leagues() {
-   global $wpdb;
-   global $jal_db_version;
-
-   $table_name = $wpdb->prefix . "wp_football_leagues";
-      
-   $sql = "CREATE TABLE $table_name (
-   id tinyint(1) NOT NULL AUTO_INCREMENT,
-   leaguename text NOT NULL,
-   teams text NOT NULL,
-   UNIQUE KEY id (id)
-    );";
-
-   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-   dbDelta($sql);
-   $count=1;
-   while($count < 5) {
-		switch ($count) {
-			case 1: //'Premier League':
-			   $html = implode('', file('http://m.bbc.co.uk/sport/football/premier-league/table'));
-			   $league = 'Premier League';
-				break;
-			case 2: //'Championship':
-				$html = implode('', file('http://m.bbc.co.uk/sport/football/championship/table'));
-				$league = 'Championship';
-				break;
-			case 3: //'League 1':
-				$html = implode('', file('http://m.bbc.co.uk/sport/football/league-one/table'));
-				$league = 'League 1';
-				break;
-			case 4: //'League 2':
-				$html = implode('', file('http://m.bbc.co.uk/sport/football/league-two/table'));
-				$league = 'League 2';
-				break;
-			}
-		 $html = str_replace("<br/>", "", $html);       
-		 $html = explode('<tbody>', $html);
-		 $html = explode('</tbody>', $html[1]);
-		 $html = explode('</tr>', $html[0]);
-         $i = 0;
-         $teams = 0;
-
-         if (!is_numeric($limit)) {$teams = sizeof($html);}
-         else {
-            if ($limit == '') {$teams = sizeof($html);}
-            elseif ($limit >= sizeof($html)) {$teams = $limit + 1;}
-            else {$teams = $limit + 1;}
-         }
-         while ( $i < ($teams-1)){
-		 	$row = explode('<tr', $html[$i]);
-			  
-			$team = explode('<td class="team">', $row[1]);
-			$team = explode('</td>', $team[1]);
-			$team = $team[0];
-			
-			$output .= $team.",";
-
-			$i++;
-		 }
-		
-		$db_league = $league;
-		$db_output = $output;
-
-		$rows_affected = $wpdb->insert( $table_name, array('leaguename' => $db_league, 'teams' => $db_output ) );
-   
-		$count++;
-   }
-   
-
-}
-
-register_activation_hook(WP_PLUGIN_DIR . '/wp-football-leagues/footleagues.php', 'init_leagues' );
-
-/**
- * Add function to widgets_init that'll load our widget.
- * @since 0.1
- */
-add_action( 'widgets_init', 'football_league_load_widgets' );
-
-/**
- * Register our widget.
- * 'FL_Widget' is the widget class used below.
- *
- * @since 0.1
- */
-
-function football_league_load_widgets() {
-	register_widget( 'FL_Widget' );
-}
-
-/**
- * FL Widget class.
- * This class handles everything that needs to be handled with the widget:
- * the settings, form, display, and update.  Nice!
- *
- * @since 0.1
- */
-class FL_Widget extends WP_Widget {
-
-	function FL_Widget() {
-				
-		/* Widget settings. */
-		$widget_ops = array( 'classname' => 'football_league', 'description' => __('A plugin to desplay the a chosen football league.', 'football_league') );
-
-		/* Widget control settings. */
-		$control_ops = array('id_base' => 'football_league-widget' );
-
-		/* Create the widget. */
-		$this->WP_Widget( 'football_league-widget', __('Wordpress Football Leagues', 'football_league'), $widget_ops, $control_ops );
-        
-        /* Setup the explode function */
-        function explode_leagues($league, $limit){
-          switch ($league) {
-          case 'Premier League':
-              $html = implode('', file('http://m.bbc.co.uk/sport/football/premier-league/table'));
-              break;
-          case 'Championship':
-              $html = implode('', file('http://m.bbc.co.uk/sport/football/championship/table'));
-              break;
-          case 'League 1':
-              $html = implode('', file('http://m.bbc.co.uk/sport/football/league-one/table'));
-              break;
-          case 'League 2':
-              $html = implode('', file('http://m.bbc.co.uk/sport/football/league-two/table'));
-              break;
-          }
-		  
-		  $html = str_replace("<br/>", "", $html);       
-		  $html = explode('<tbody>', $html);
-		  $html = explode('</tbody>', $html[1]);
-		  $html = explode('</tr>', $html[0]);
-          $output = "<table><tr><th>Pos</th><th>Name</th><th>Pld</th><th>GD</th><th>Pts</th></tr>";
-          $i = 0;
-          $teams = 0;
-
-          if (!is_numeric($limit)) {$teams = sizeof($html);}
-          else {
-              if ($limit == '') {$teams = sizeof($html);}
-              elseif ($limit >= sizeof($html)) {$teams = $limit + 1;}
-              else {$teams = $limit + 1;}
-          }
-          while ( $i < ($teams-1)){
-			  $row = explode('<tr', $html[$i]);
-			  
-			  $team = explode('<td class="team">', $row[1]);
-			  $team = explode('</td>', $team[1]);
-			  $team = $team[0];
-			  
-			  $played = explode('<td class="played">', $row[1]);
-			  $played = explode('</td>', $played[1]);
-			  $played = $played[0];
-			  
-			  $gd = explode('<td class="goal-difference">', $row[1]);
-			  $gd = explode('</td>', $gd[1]);
-			  $gd = $gd[0];
-			  
-			  $points = explode('<td class="points">', $row[1]);
-			  $points = explode('</td>', $points[1]);
-			  $points = $points[0];
-			  
-              //$row = explode('</tr>', $row[$i]);
-              $output .= "<tr><td>".($i+1)."</td><td>".$team."</td><td>".$played."</td><td>".$gd."</td><td>".$points."</td></tr>";
-              $i++;
-          }
-          $output .= "</table>";
-          echo $output;
-      }
+class wpfootballleagues extends WP_Widget
+{
+  function wpfootballleagues()
+  {
+    $widget_ops = array('classname' => 'wpfootballleagues', 'description' => 'Displays a football league of your choice' );
+    $this->WP_Widget('wpfootballleagues', 'WP Football League', $widget_ops);
+  }
+ 
+  function form($instance)
+  {
+    $instance = wp_parse_args( (array) $instance,
+	  array(
+		 'title' => '',
+		 'league' => '',
+		 'highlight-team' => false,
+		 'your-team' => '',
+		 'details-played' => false,
+		 'details-won' => false,
+		 'details-drawn' => false,
+		 'details-lost' => false,
+		 'details-for' => false,
+		 'details-agg' => false,
+		 'details-diff' => false,
+		 'details-points' => false,
+		 'limit-teams' => '0',
+	  )
+   );
     
-	}
+    $title   = $instance['title'];
+    $league = $instance['league'];
+	$highlightTeam = $instance['highlight-team'];
+	$yourTeam = $instance['your-team'];
+	$detailsPlayed = $instance['details-played'];
+	$detailsWon = $instance['details-won'];
+	$detailsDrawn = $instance['details-drawn'];
+	$detailsLost = $instance['details-lost'];
+	$detailsGoalsFor = $instance['details-for'];
+	$detailsGoalsAg = $instance['details-agg'];
+	$detailsGoalDif = $instance['details-diff'];
+	$detailsPoints = $instance['details-points'];
+	$limitTeams = $instance['limit-teams'];
 
-	function widget( $args, $instance ) {
-		extract( $args );
-
-		/* Our variables from the widget settings. */
-		$title = apply_filters('widget_title', $instance['title'] );
-		$name = $instance['name'];
-		$league = $instance['league'];
-		$showteam = $instance['showteam'];
-
-		/* Before widget (defined by themes). */
-		echo $before_widget;
-
-		/* Display the widget title if one was input (before and after defined by themes). */
-		if ( $title )
-			echo $before_title . $title . $after_title;
-
-		/* If show league was selected, display the user's league. */
-		if ( $league )
-			explode_leagues($instance['league'], $instance['limit_teams']);
-
-		/* After widget (defined by themes). */
-		echo $after_widget;
-	}
-
-	function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
-
-		/* Strip tags for title and name to remove HTML (important for text inputs). */
-		$instance['title'] = strip_tags( $new_instance['title'] );
-		$instance['limit_teams'] = strip_tags( $new_instance['limit_teams'] );
-    	$instance['league'] = $new_instance['league'];
-		$instance['showteam'] = $new_instance['showteam'];
-		
-
-		return $instance;
-	}
+?>
+	<div class="footLeagues">
+	  <p><label for="<?php echo $this->get_field_id('title'); ?>">Title:</label><br /><input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /></p>
+  
+    <p><label for="<?php echo $this->get_field_id('league'); ?>">League: </label><br />
 	
-	function form( $instance ) {
-
-		/* Set up some default widget settings. */
-		$defaults = array( 'showteam' => '', 'title' => __('FL', 'football_league'), 'name' => __('John Doe', 'football_league'), 'league' => 'male', 'show_league' => true );
-		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
-
-		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'hybrid'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
-		</p>
-		<!--<span id="<?php if ($instance['league'] == 'Premier League'){echo 'brian"';}?>">david</span>-->
-        <p>
-          <label for="<?php echo $this->get_field_name( 'league' ); ?>">League</label><br />
-          <select id="<?php echo $this->get_field_id( 'league' ); ?>" name="<?php echo $this->get_field_name( 'league' ); ?>" style="width:100%;">
-              <option value="Premier League" <?php if ($instance['league'] == 'Premier League'){echo 'selected="selected"';}?> >Premier League</option>
-              <option value="Championship" <?php if ($instance['league'] == 'Championship'){echo 'selected="selected"';}?> >Championship</option>
-              <option value="League 1" <?php if ($instance['league'] == 'League 1'){echo 'selected="selected"';}?> >League 1</option>
-              <option value="League 2" <?php if ($instance['league'] == 'League 2'){echo 'selected="selected"';}?> >League 2</option>
-          </select>
-        </p>
-        
-		<p>
-			<label for="<?php echo $this->get_field_id( 'limit_teams' ); ?>"><?php _e('Number of shown teams:', 'football_league'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'limit_teams' ); ?>" name="<?php echo $this->get_field_name( 'limit_teams' ); ?>" value="<?php echo $instance['limit_teams']; ?>" style="width:100%;" />
-		</p>
-		
-		<!--<p>
-			<label for="<?php echo $this->get_field_id( 'showteam' ); ?>"></label>
-			<input type="checkbox" checked="<?php echo $instance['showteam']; ?>"> Show your team?</input>
-		</p>-->
-		
-		<?php
-			global $wpdb;
-			$table_name = $wpdb->prefix . "wp_football_leagues";
-			$arrLegaues = array(
-				1 => $wpdb->get_var("SELECT teams FROM $table_name WHERE leaguename = 'Premier League' "),
-				2 => $wpdb->get_var("SELECT teams FROM $table_name WHERE leaguename = 'Championship' "),
-				3 => $wpdb->get_var("SELECT teams FROM $table_name WHERE leaguename = 'League 1' "),
-				4 => $wpdb->get_var("SELECT teams FROM $table_name WHERE leaguename = 'League 2' "),
-			);
-			$arrLegaueNames = array(
-				1 => 'premierleague',
-				2 => 'championship',
-				3 => 'league1',
-				4 => 'league2',
-			);
-			
-			$d = 1;
-			while ($d < 5){
-				
-				$teams = explode(',', $arrLegaues[$d]);
-				$x = 0;
-				$leagueOut = '<select id="'.$arrLegaueNames[$d].'" style="display:none">';
-				while ($x <= sizeof($teams)){
-					$leagueOut .= '<option>'.$teams[$x].'</option>';
-					$x++;
-				}
-						
-				echo $leagueOut."</select>";
-				$d++;
-			}
-		?>
+	<select id="<?php echo $this->get_field_id('league'); ?>" name="<?php echo $this->get_field_name('league'); ?>">
+	  <option value="pl" <?php if ($league == 'pl'){echo 'selected="selected"';}?> >Premier League</option>
+      <option value="ch" <?php if ($league == 'ch'){echo 'selected="selected"';}?> >Championship</option>
+	  <option value="l1" <?php if ($league == 'l1'){echo 'selected="selected"';}?> >League 1</option>
+	  <option value="l2" <?php if ($league == 'l2'){echo 'selected="selected"';}?> >League 2</option>
+	</select>
+	</p>
+	<p>
+	  <label for="<?php echo $this->get_field_id('highlight-team'); ?>">Highlight your team?</label>
+	  <input <?php if($highlightTeam):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('highlight-team'); ?>"  class="<?php echo $yourTeam; ?>" id="<?php echo $this->get_field_id('highlight-team'); ?>" />
+	</p>
+	<p id="changeTeam" <?php if(!$highlightTeam):echo 'style="display:none"'; endif; ?>>Chosen team: <span style="font-weight:bold"><?php echo $yourTeam; ?></span>. <span>Change?</span></p>
+    <p id="your-team" style="display:none">
+	<label for="<?php echo $this->get_field_id('your-team'); ?>">Choose your team?</label>
+		<select id="<?php echo $this->get_field_id('your-team'); ?>" name="<?php echo $this->get_field_name('your-team'); ?>">
+		</select>
+    </p>
+	<p>
+	  <label for="<?php echo $this->get_field_id('limit-teams'); ?>">Limit teams:</label>
+	  <br />Set to 0 for all teams<br />
+	  <input id="<?php echo $this->get_field_id('limit-teams'); ?>" name="<?php echo $this->get_field_name('limit-teams'); ?>" type="text" value="<?php echo attribute_escape($limitTeams); ?>" />
+	</p>
+	<h2>Details:</h2>
+	<p>
+	  <label for="<?php echo $this->get_field_id('details-played'); ?>">Show games played:</label>&nbsp;
+	  <input <?php if($detailsPlayed):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('details-played'); ?>" id="<?php echo $this->get_field_id('details-played'); ?>" />
+	  <br />
+	  <label for="<?php echo $this->get_field_id('details-won'); ?>">Show games won:</label>&nbsp;
+	  <input <?php if($detailsWon):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('details-won'); ?>" id="<?php echo $this->get_field_id('details-won'); ?>" />
+	  <br />
+	  <label for="<?php echo $this->get_field_id('details-drawn'); ?>">Show games drawn:</label>&nbsp;
+	  <input <?php if($detailsDrawn):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('details-drawn'); ?>" id="<?php echo $this->get_field_id('details-drawn'); ?>" />
+	  <br />
+	  <label for="<?php echo $this->get_field_id('details-lost'); ?>">Show games lost:</label>&nbsp;
+	  <input <?php if($detailsLost):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('details-lost'); ?>" id="<?php echo $this->get_field_id('details-lost'); ?>" />
+	  <br />
+	  <label for="<?php echo $this->get_field_id('details-for'); ?>">Show goals for:</label>&nbsp;
+	  <input <?php if($detailsGoalsFor):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('details-for'); ?>" id="<?php echo $this->get_field_id('details-for'); ?>" />
+	  <br />
+	  <label for="<?php echo $this->get_field_id('details-agg'); ?>">Show goals against:</label>&nbsp;
+	  <input <?php if($detailsGoalsAg):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('details-agg'); ?>" id="<?php echo $this->get_field_id('details-agg'); ?>" />
+	  <br />
+	  <label for="<?php echo $this->get_field_id('details-diff'); ?>">Show goal difference:</label>&nbsp;
+	  <input <?php if($detailsGoalDif):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('details-diff'); ?>" id="<?php echo $this->get_field_id('details-diff'); ?>" />
+	  <br />
+	  <label for="<?php echo $this->get_field_id('details-points'); ?>">Show Points:</label>&nbsp;
+	  <input <?php if($detailsPoints):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('details-points'); ?>" id="<?php echo $this->get_field_id('details-points'); ?>" />
+	</p>
 	
-		<script type="text/javascript">
-		</script>
-	<?php
-	}
+	
+	
+	<input type="hidden" id="plugin-url" value="<?php echo plugin_dir_url( __FILE__ ); ?>" />
+	</div>
+	
+    
+<?php
+  }
+ 
+  function update($new_instance, $old_instance)
+  {
+    $instance = $old_instance;
+    
+    // Retrieve Fields
+    $instance['title']   = strip_tags($new_instance['title']);
+    $instance['league'] = strip_tags($new_instance['league']);
+	$instance['highlight-team'] = $new_instance['highlight-team'];
+	if (strip_tags($new_instance['your-team']) != '')
+	  $instance['your-team'] = strip_tags($new_instance['your-team']);
+	$instance['details-played'] = $new_instance['details-played'];
+	$instance['details-won'] = $new_instance['details-won'];
+	$instance['details-drawn'] = $new_instance['details-drawn'];
+	$instance['details-lost'] = $new_instance['details-lost'];
+	$instance['details-for'] = $new_instance['details-for'];
+	$instance['details-agg'] = $new_instance['details-agg'];
+	$instance['details-diff'] = $new_instance['details-diff'];
+	$instance['details-points'] = $new_instance['details-points'];
+	if ($new_instance['limit-teams'] == '')
+	  $instance['limit-teams'] = 0;
+    else
+	  $instance['limit-teams'] = $new_instance['limit-teams'];
+    
+    return $instance;
+  }
+ 
+  function widget($args, $instance)
+  {
+	  extract($args, EXTR_SKIP);
+	
+	  echo $before_widget;
+	  $title   = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
+	  $league = $instance['league'];
+	
+	  if (!empty($title))
+		 echo $before_title . $title . $after_title;
+		 
+	  if (!empty($league)):
+		 switch ($league):
+			case 'pl':
+			   $get_league = file_get_contents('https://api.import.io/store/data/f9d467f1-9123-4e74-beb1-8baa01a98880/_query?input/webpage/url=http://www.bbc.co.uk/sport/football/premier-league/table&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+			   break;
+			case 'ch';
+			   $get_league = file_get_contents('https://api.import.io/store/data/0c971ab8-3007-4f4d-afad-83767f1ea59a/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fchampionship%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+			   break;
+		 endswitch;
+		 $get_league = json_decode($get_league, true);
+		 echo '<table><tr>';
+		 echo '<th width="50%">&nbsp;</th>';
+		 if ($instance['details-played'])
+		    echo '<th>Pld</th>';
+		 if ($instance['details-won'])
+		    echo '<th>W</th>';
+		 if ($instance['details-drawn'])
+		    echo '<th>D</th>';
+		 if ($instance['details-lost'])
+		    echo '<th>L</th>';
+		 if ($instance['details-for'])
+		    echo '<th>F</th>';
+		 if ($instance['details-agg'])
+		    echo '<th>A</th>';
+		 if ($instance['details-diff'])
+		    echo '<th>Dif</th>';
+		 if ($instance['details-points'])
+		    echo '<th>Pts</th>';
+		 echo '</tr>';
+		 if ($instance['limit-teams']>0)
+			$i = 0;
+		 foreach($get_league['results'] as $team):
+			if ($instance['limit-teams']>0 && $i == $instance['limit-teams']):
+			   break;
+			else:
+			   if ($instance['your-team'] == $team['team'] && $instance['highlight-team'])
+				  echo '<tr class="highlight"><td>';
+			   else
+				  echo '<tr><td width="50%">';
+			   echo $team['team'].'</td>';
+			   if ($instance['details-played'])
+				  echo '<td>'.$team['played'].'</td>';
+			   if ($instance['details-won'])
+				  echo '<td>'.$team['won'].'</td>';
+			   if ($instance['details-drawn'])
+				  echo '<td>'.$team['drawn'].'</td>';
+			   if ($instance['details-lost'])
+				  echo '<td>'.$team['lost'].'</td>';
+			   if ($instance['details-for'])
+				  echo '<td>'.$team['goals_for'].'</td>';
+			   if ($instance['details-agg'])
+				  echo '<td>'.$team['goals_against'].'</td>';
+			   if ($instance['details-diff'])
+				  echo '<td>'.$team['goal_difference'].'</td>';
+			   if ($instance['details-points'])
+				  echo '<td>'.$team['points'].'</td>';
+			   if ($instance['your-team'] == $team['team'])
+				  echo '</span>';
+			   echo '</tr>';
+			   $i++;
+			endif;
+		 endforeach;
+		 echo '</table>';
+	  endif;
+	
+	  echo $after_widget;
+  }
+ 
 }
+
+add_action( 'widgets_init', create_function('', 'return register_widget("wpfootballleagues");') );
+
+
+function rbw_scripts() {
+  wp_enqueue_style( "rbw_css", path_join(WP_PLUGIN_URL, basename( dirname( __FILE__ ) )."/rbw-styles.css"));
+}    
+ 
+add_action('wp_enqueue_scripts', 'rbw_scripts');
 
 ?>
