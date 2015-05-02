@@ -2,7 +2,7 @@
 Contributors: ajthomascouk
 Donate link: http://bit.ly/HdTc5Q
 Tags: widget, football, soccer
-Stable tag: 0.4.1
+Stable tag: 0.4.2
 
 It's here, the plugin thats been missing from wordpress! A plugin to display a football league table, specified by you. 
 
@@ -36,13 +36,16 @@ Worpress Football Leagues is very easy to use, however if you do get stuck or ha
 
 == Help / Bugs ==
 
-If you need help please post a comment at http://ajthomas.co.uk/footballleagues and we will answer it as quickly as we can.
+If you need help please post a comment at http://www.ajthomas.co.uk/footballleagues and we will answer it as quickly as we can.
 
 == Requested Features ==
 
-If you have any requests, please post a comment at http://ajthomas.co.uk/footballleagues.
+If you have any requests, please post a comment at http://www.ajthomas.co.uk/footballleagues.
 
 == Changelog ==
+
+= 0.4.2 =
+Updating URLS, not important to update. Yo can skip this one.
 
 = 0.4.1 =
 So here it is, the new (and improved!) WP Football Leagues.
