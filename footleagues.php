@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: WordPress Football Leagues
-Plugin URI: http://ajthomas.co.uk/footballleagues
+Plugin URI: http://www.ajthomas.co.uk/footballleagues
 Description: A plugin to display the a chosen football league.
-Version: 0.4.1
+Version: 0.4.2
 Author: Alex Thomas
-Author URI: http://ajthomas.co.uk
+Author URI: http://www.ajthomas.co.uk
 License: A "Slug" license name e.g. GPL2
 */
 
