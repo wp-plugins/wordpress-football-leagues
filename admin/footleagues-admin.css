@@ -1,0 +1,11 @@
+.footLeagues label {
+    font-weight:bold;
+}
+.footLeagues h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 13px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
