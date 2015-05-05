@@ -10,7 +10,7 @@ It's here, the plugin thats been missing from wordpress! A plugin to display a f
 == Description ==
 Wordpress Football Leagues allows you to select a football league to show on you site as a widget. You can select the number of teams to show, allowing the widget to be placed is small footers. You can also Highlight your favourite team.
 
-## Available Leagues:
+= Available Leagues: =
 
 - England
  - Premiership, Championship, League One and League Two
@@ -41,15 +41,18 @@ Installing Wordpress Football Leagues is really simple:
 == Use ==
 
 Wordpress Football Leagues is very easy to use, however if you do get stuck or have any questions, see [my website] for more information.
+[my website]:http://www.ajthomas.co.uk/footballleagues/
 
 
 == Help / Bugs ==
 
 If you need help please post a comment on [my website] and I’ll will answer it as quickly as I can.
+[my website]:http://www.ajthomas.co.uk/footballleagues/
 
 == Requested Features ==
 
 If you have any requests, please post a comment on [my website].
+[my website]:http://www.ajthomas.co.uk/footballleagues/
 
 == Changelog ==
 
