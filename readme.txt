@@ -20,6 +20,7 @@ Wordpress Football Leagues allows you to select a football league to show on you
  - Tippeligaen
 
 Norway? Thats right, Norway. A Customer asked if I would add the Tippeligaen and I obliged. Are there any leagues you’d like to see? Please let me know over on [my website] 
+
 [my website]:http://www.ajthomas.co.uk/footballleagues/
 
 == Screenshots ==
@@ -42,6 +43,7 @@ Installing Wordpress Football Leagues is really simple:
 == Use ==
 
 Wordpress Football Leagues is very easy to use, however if you do get stuck or have any questions, see [my website] for more information.
+
 [my website]:http://www.ajthomas.co.uk/footballleagues/
 
 
@@ -59,10 +61,11 @@ If you have any requests, please post a comment on [my website].
 
 = 0.4.4 =
 NEW LEAGUES ADDED:
-* Scotland
-** Premiership, Championship, League One and League Two
-* Norway
-** Tippeligaen
+
+- Scotland
+—- Premiership, Championship, League One and League Two
+- Norway
+—- Tippeligaen
 
 Norway? Thats right, Norway. A Customer asked if I would add the Tippeligaen and I obliged. Are there any leagues you’d like to see? Please let me know over on [my website] 
 
