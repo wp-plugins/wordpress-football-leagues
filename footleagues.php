@@ -3,7 +3,7 @@
 Plugin Name: WordPress Football Leagues
 Plugin URI: http://www.ajthomas.co.uk/footballleagues
 Description: A plugin to display the a chosen football league.
-Version: 0.4.3
+Version: 0.4.4
 Author: Alex Thomas
 Author URI: http://www.ajthomas.co.uk
 License: A "Slug" license name e.g. GPL2
@@ -46,6 +46,7 @@ class wpfootballleagues extends WP_Widget
     $instance = wp_parse_args( (array) $instance,
 	  array(
 		 'title' => '',
+		 'country' => 'eng',
 		 'league' => '',
 		 'highlight-team' => false,
 		 'your-team' => '',
@@ -62,7 +63,8 @@ class wpfootballleagues extends WP_Widget
    );
     
     $title   = $instance['title'];
-    $league = $instance['league'];
+    $country = $instance['country'];
+	$league = $instance['league'];
 	$highlightTeam = $instance['highlight-team'];
 	$yourTeam = $instance['your-team'];
 	$detailsPlayed = $instance['details-played'];
@@ -79,13 +81,31 @@ class wpfootballleagues extends WP_Widget
 	<div class="footLeagues">
 	  <p><label for="<?php echo $this->get_field_id('title'); ?>">Title:</label><br /><input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /></p>
   
-    <p><label for="<?php echo $this->get_field_id('league'); ?>">League: </label><br />
+    <p><label for="<?php echo $this->get_field_id('country'); ?>">country: </label><br />
+	
+	<select id="<?php echo $this->get_field_id('country'); ?>" name="<?php echo $this->get_field_name('country'); ?>">
+	  <option value="eng" <?php if ($country == 'eng'){echo 'selected="selected"';}?> >England</option>
+	  <option value="nor" <?php if ($country == 'nor'){echo 'selected="selected"';}?> >Norway</option>
+	  <option value="sco" <?php if ($country == 'sco'){echo 'selected="selected"';}?> >Scotland</option>
+	</select>
+	</p>
+	
+	<p><label for="<?php echo $this->get_field_id('league'); ?>">League: </label><br />
 	
 	<select id="<?php echo $this->get_field_id('league'); ?>" name="<?php echo $this->get_field_name('league'); ?>">
-	  <option value="pl" <?php if ($league == 'pl'){echo 'selected="selected"';}?> >Premier League</option>
-      <option value="ch" <?php if ($league == 'ch'){echo 'selected="selected"';}?> >Championship</option>
-	  <option value="l1" <?php if ($league == 'l1'){echo 'selected="selected"';}?> >League 1</option>
-	  <option value="l2" <?php if ($league == 'l2'){echo 'selected="selected"';}?> >League 2</option>
+	  <?php if ($country == 'eng') : ?>
+		<option value="pl" <?php if ($league == 'pl'){echo 'selected="selected"';}?> >Premier League</option>
+		<option value="ch" <?php if ($league == 'ch'){echo 'selected="selected"';}?> >Championship</option>
+		<option value="l1" <?php if ($league == 'l1'){echo 'selected="selected"';}?> >League 1</option>
+		<option value="l2" <?php if ($league == 'l2'){echo 'selected="selected"';}?> >League 2</option>
+	  <?php elseif ($country == 'sco') : ?>
+		<option value="spl" <?php if ($league == 'spl'){echo 'selected="selected"';}?> >Premiership</option>
+		<option value="sch" <?php if ($league == 'sch'){echo 'selected="selected"';}?> >Championship</option>
+		<option value="sl1" <?php if ($league == 'sl1'){echo 'selected="selected"';}?> >League 1</option>
+		<option value="sl2" <?php if ($league == 'sl2'){echo 'selected="selected"';}?> >League 2</option>
+	  <?php elseif ($country == 'nor') : ?>
+		<option value="nor1" <?php if ($league == 'nor1'){echo 'selected="selected"';}?> >Tippeligaen</option>
+	  <?php endif; ?>
 	</select>
 	</p>
 	<p>
@@ -145,7 +165,8 @@ class wpfootballleagues extends WP_Widget
     
     // Retrieve Fields
     $instance['title']   = strip_tags($new_instance['title']);
-    $instance['league'] = strip_tags($new_instance['league']);
+    $instance['country'] = strip_tags($new_instance['country']);
+	$instance['league'] = strip_tags($new_instance['league']);
 	$instance['highlight-team'] = $new_instance['highlight-team'];
 	if (strip_tags($new_instance['your-team']) != '')
 	  $instance['your-team'] = strip_tags($new_instance['your-team']);
@@ -171,27 +192,60 @@ class wpfootballleagues extends WP_Widget
 	
 	  echo $before_widget;
 	  $title   = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
+	  $country = $instance['country'];
 	  $league = $instance['league'];
-	
 	  if (!empty($title))
 		 echo $before_title . $title . $after_title;
 		 
-	  if (!empty($league)):
-		 switch ($league):
-			case 'pl':
-			   $get_league = file_get_contents('https://api.import.io/store/data/f9d467f1-9123-4e74-beb1-8baa01a98880/_query?input/webpage/url=http://www.bbc.co.uk/sport/football/premier-league/table&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
-			   break;
-			case 'ch';
-			   $get_league = file_get_contents('https://api.import.io/store/data/0c971ab8-3007-4f4d-afad-83767f1ea59a/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fchampionship%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
-			   break;
-			case 'l1';
-			   $get_league = file_get_contents('https://api.import.io/store/data/06167ff7-8c34-4f2a-9e6b-cd6a08dd61e4/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fleague-one%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
-			   break;
-			case 'l2';
-			   $get_league = file_get_contents('https://api.import.io/store/data/b4add97e-e29b-4307-9337-c3cdf6b55281/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fleague-two%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
-			   break;
-		 endswitch;
+	  if (!empty($country)):
+		switch ($country):
+			case 'eng':
+			  switch ($league):
+				case 'pl':
+				   $get_league = file_get_contents('https://api.import.io/store/data/f9d467f1-9123-4e74-beb1-8baa01a98880/_query?input/webpage/url=http://www.bbc.co.uk/sport/football/premier-league/table&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+				   break;
+				case 'ch';
+				   $get_league = file_get_contents('https://api.import.io/store/data/0c971ab8-3007-4f4d-afad-83767f1ea59a/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fchampionship%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+				   break;
+				case 'l1';
+				   $get_league = file_get_contents('https://api.import.io/store/data/06167ff7-8c34-4f2a-9e6b-cd6a08dd61e4/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fleague-one%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+				   break;
+				case 'l2';
+				   $get_league = file_get_contents('https://api.import.io/store/data/b4add97e-e29b-4307-9337-c3cdf6b55281/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fleague-two%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+				   break;
+			  endswitch;
+			break;
+			case 'sco':
+			  switch ($league):
+				case 'spl':
+					$get_league = file_get_contents('https://api.import.io/store/data/e522c6a7-892d-4247-af16-4681c64d0f40/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fscottish-premiership%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+				    break;
+				case 'sch':
+					$get_league = file_get_contents('https://api.import.io/store/data/4d634fe9-1253-4941-bf07-53cec9b5c434/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fscottish-championship%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+				    break;
+				case 'sl1':
+					$get_league = file_get_contents('https://api.import.io/store/data/37fe580e-2f34-4bea-8a20-2c4e39e4db73/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fscottish-league-one%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+				    break;
+				case 'sl2':
+					$get_league = file_get_contents('https://api.import.io/store/data/88cd841c-b84b-442c-adff-2c03fd01db5e/_query?input/webpage/url=http%3A%2F%2Fwww.bbc.co.uk%2Fsport%2Ffootball%2Fscottish-league-two%2Ftable&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+				    break;
+			  endswitch;
+			break;
+		  case 'nor':
+			  switch ($league):
+				case 'nor1':
+					$get_league = file_get_contents('https://api.import.io/store/data/cc74ff4f-7a33-41da-b8e3-713c9fba4248/_query?input/webpage/url=http%3A%2F%2Fwww.fotball.no%2Ffotballdata%2FTurnering%2FTabell%2F%3FtournamentId%3D143538&_user=4312d6e7-6d59-4722-a5ae-5c2414b9a320&_apikey=4312d6e7-6d59-4722-a5ae-5c2414b9a320%3ATZrth6CTYrdCQ97Y%2Bqagsin1MOLoW827Lqe1DE3TwrigyzAzuzT4gDpbqiCS93kMKqRpCfBGduaR8TCJIDDEUQ%3D%3D');
+				    break;
+			  endswitch;
+			break;
+		endswitch;
+		  
 		 $get_league = json_decode($get_league, true);
+		 
+		 if ($league == 'nor1'){
+			$get_league['results'] = array_splice($get_league['results'], 0, 16);
+		 }
+		
 		 echo '<table><tr>';
 		 echo '<th width="50%">&nbsp;</th>';
 		 if ($instance['details-played'])
