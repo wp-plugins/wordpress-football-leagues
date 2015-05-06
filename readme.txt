@@ -47,7 +47,7 @@ Installing Wordpress Football Leagues is really simple:
 
 `[wpfl *options*]`
 
-**Defailts options:**
+**Default options:**
 `country="eng"
 league="pl"
 played="true"
@@ -62,7 +62,7 @@ myteam=""
 credit="true"
 limit="0" - 0 means show all teams`
 
-**Options**
+**Options:**
 `country="eng|sco|nor"
 league="{pl|ch|l1|l2}|{spl|sch|sl1|sl2}|{nor1}"
 played="true|false"
@@ -73,9 +73,9 @@ for="true|false"
 against="true|false"
 difference="true|false"
 points="true|false"
-myteam="" - Team must mactch the name as its shown in the table (eg 'crystal palace). *Not case sensitive*
+myteam="x" - As in the table (eg crystal palace). *Not case sensitive*
 credit="true|false"
-limit="0|n"`
+limit="0|n" - where 'n' is the number of teams to show`
 
 == Use ==
 
