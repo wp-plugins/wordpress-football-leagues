@@ -1,0 +1,18 @@
+.wpfl .highlight {
+    font-weight:bold;
+}
+.wpfl td, .wpfl th {
+    text-align:right;
+    padding:5px;
+}
+.wpfl tr td:first-child {
+    text-align:left;
+}
+#wpfl-credit {
+    font-size:smaller;
+    text-align:left;
+}
+#wpfl-credit a {
+    color:green;
+    text-decoration:none;
+}
