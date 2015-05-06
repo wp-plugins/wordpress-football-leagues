@@ -1,10 +1,18 @@
-.wpfootballleagues .highlight {
+.wpfl .highlight {
     font-weight:bold;
 }
-.wpfootballleagues td, .wpfootballleagues th {
+.wpfl td, .wpfl th {
     text-align:right;
     padding:5px;
 }
-.wpfootballleagues tr td:first-child {
+.wpfl tr td:first-child {
     text-align:left;
+}
+#wpfl-credit {
+    font-size:smaller;
+    text-align:left;
+}
+#wpfl-credit a {
+    color:green;
+    text-decoration:none;
 }

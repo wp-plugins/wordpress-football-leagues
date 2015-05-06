@@ -2,7 +2,7 @@
 Contributors: ajthomascouk
 Donate link: http://bit.ly/HdTc5Q
 Tags: widget, football, soccer
-Stable tag: 0.4.5
+Stable tag: 0.5
 
 It's here, the plugin thats been missing from wordpress! A plugin to display a football league table, specified by you. 
 
@@ -36,9 +36,46 @@ Installing Wordpress Football Leagues is really simple:
 
 1. Upload the plugin folder (i.e. wp-football-leagues) to the /wp-content/plugins/ directory of your WordPress installation.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Add the widget to a side bar through the 'Appearance > Widgets' menu in WordPress.
-4. Tweek the options to suit your needs.
-4. Enjoy!
+
+= Widget =
+
+1. Add the widget to a side bar through the 'Appearance > Widgets' menu in WordPress.
+2. Tweek the options to suit your needs.
+3. Enjoy!
+
+= Shortcode =
+
+`[wpfl options]`
+
+**Defailts options:**
+`country="eng"`
+`league="pl"`
+`played="true"`
+`won="true"`
+`drawn="true"`
+`lost="true"`
+`for="true"`
+`against="true"`
+`difference="true"`
+`points="true"`
+`myteam=""`
+`credit="true"`
+`limit="0"` - 0 means show all teams
+
+**Options**
+`country="eng|sco|nor"`
+`league="{pl|ch|l1|l2}|{spl|sch|sl1|sl2}|{nor1}"`
+`played="true|false"`
+`won="true|false"`
+`drawn="true|false"`
+`lost="true|false"`
+`for="true|false"`
+`against="true|false"`
+`difference="true|false"`
+`points="true|false"`
+`myteam=""` - Team must mactch the name as its shown in the table (eg 'crystal palace). *Not case sensitive*
+`credit="true|false"`
+`limit="0|n"`
 
 == Use ==
 
@@ -58,6 +95,10 @@ If you have any requests, please post a comment on [my website].
 [my website]:http://www.ajthomas.co.uk/footballleagues/
 
 == Changelog ==
+
+= 0.5 =
+
+* Added SHORTCODE!!!
 
 = 0.4.5 =
 Stability updates.
