@@ -63,7 +63,7 @@ If you have any requests, please post a comment on [my website].
 Stability updates.
 
 I'd be really happy to [hear from you] if you use the plugin. I'd also appreciate if you could spare two minutes to [rate the plugin]. Thanks.
-[hear from you]:https://twitter.com/share?url=http://www.ajthomas.co.uk/footballleagues/&text=Hey @ajthomascouk, I use your 'Wordpress Football Leagues' plugin on my site - *SITE URL*, It's the bomb, thanks!
+[hear from you]:https://twitter.com/share?url=http://www.ajthomas.co.uk/footballleagues/&text=Hey
 [rate the plugin]:https://wordpress.org/support/view/plugin-reviews/wordpress-football-leagues
 
 = 0.4.4 =
