@@ -1,0 +1,10 @@
+.wpfootballleagues .highlight {
+    font-weight:bold;
+}
+.wpfootballleagues td, .wpfootballleagues th {
+    text-align:right;
+    padding:5px;
+}
+.wpfootballleagues tr td:first-child {
+    text-align:left;
+}
