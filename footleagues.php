@@ -316,8 +316,8 @@ class wpfootballleagues extends WP_Widget
 function wpfl_shortcode( $atts, $content = null)	{
  
 	extract( shortcode_atts( array(
-				'country' => '',
-				'league' => '',
+				'country' => 'eng',
+				'league' => 'pl',
 				'played' => 'true',
 				'won' => 'true',
 				'drawn' => 'true',
