@@ -2,8 +2,8 @@
 /*
 Plugin Name: WordPress Football Leagues
 Plugin URI: http://www.ajthomas.co.uk/footballleagues
-Description: A plugin to display the a chosen football league.
-Version: 0.4.4
+Description: A plugin to display the a chosen football league. Please <a href="https://twitter.com/share?url=http://www.ajthomas.co.uk/footballleagues/&text=Hey @ajthomascouk, I use your 'Wordpress Football Leagues' plugin on my site - *SITE URL*, It's the bomb, thanks!">let me know</a> if you use this plugin. Also please <a href="https://wordpress.org/support/view/plugin-reviews/wordpress-football-leagues">rate the plugin</a>. Thank you very much.
+Version: 0.4.5
 Author: Alex Thomas
 Author URI: http://www.ajthomas.co.uk
 License: A "Slug" license name e.g. GPL2
@@ -76,6 +76,7 @@ class wpfootballleagues extends WP_Widget
 	$detailsGoalDif = $instance['details-diff'];
 	$detailsPoints = $instance['details-points'];
 	$limitTeams = $instance['limit-teams'];
+	$credit = $instance['credit'];
 
 ?>
 	<div class="footLeagues">
@@ -149,6 +150,10 @@ class wpfootballleagues extends WP_Widget
 	  <label for="<?php echo $this->get_field_id('details-points'); ?>">Show Points:</label>&nbsp;
 	  <input <?php if($detailsPoints):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('details-points'); ?>" id="<?php echo $this->get_field_id('details-points'); ?>" />
 	</p>
+	<p>
+	  <label for="<?php echo $this->get_field_id('credit'); ?>">Hide credit link?:</label>&nbsp;
+	  <input <?php if($credit):echo "checked"; endif; ?> type="checkbox" name="<?php echo $this->get_field_name('credit'); ?>" id="<?php echo $this->get_field_id('credit'); ?>" />
+	</p>
 	
 	
 	
@@ -182,7 +187,7 @@ class wpfootballleagues extends WP_Widget
 	  $instance['limit-teams'] = 0;
     else
 	  $instance['limit-teams'] = $new_instance['limit-teams'];
-    
+    $instance['credit'] = $new_instance['credit'];
     return $instance;
   }
  
@@ -299,6 +304,8 @@ class wpfootballleagues extends WP_Widget
 			endif;
 		 endforeach;
 		 echo '</table>';
+		 if (!$instance['details-for'])
+			echo '<p style="font-size:smaller; text-align:center;">~ Plugin by <a href="http://www.ajthomas.co.uk" style="color:green; text-decoration:none;">ajthomascouk</a> ~</p>';
 	  endif;
 	
 	  echo $after_widget;
