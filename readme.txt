@@ -8,7 +8,7 @@ It's here, the plugin thats been missing from wordpress! A plugin to display a f
 
 
 == Description ==
-Wordpress Football Leagues allows you to select a football league to show on you site as a widget. You can select the number of teams to show, allowing the widget to be placed is small footers. You can also Highlight your favourite team.
+Wordpress Football Leagues allows you to select a football league to show on you site as a widget or in any page/post via a shortcode. You can select the number of teams to show, allowing the widget to be placed is small footers. You can also Highlight your favourite team.
 
 = Available Leagues: =
 
@@ -45,37 +45,37 @@ Installing Wordpress Football Leagues is really simple:
 
 = Shortcode =
 
-`[wpfl options]`
+`[wpfl *options*]`
 
 **Defailts options:**
-`country="eng"`
-`league="pl"`
-`played="true"`
-`won="true"`
-`drawn="true"`
-`lost="true"`
-`for="true"`
-`against="true"`
-`difference="true"`
-`points="true"`
-`myteam=""`
-`credit="true"`
-`limit="0"` - 0 means show all teams
+`country="eng"
+league="pl"
+played="true"
+won="true"
+drawn="true"
+lost="true"
+for="true"
+against="true"
+difference="true"
+points="true"
+myteam=""
+credit="true"
+limit="0" - 0 means show all teams`
 
 **Options**
-`country="eng|sco|nor"`
-`league="{pl|ch|l1|l2}|{spl|sch|sl1|sl2}|{nor1}"`
-`played="true|false"`
-`won="true|false"`
-`drawn="true|false"`
-`lost="true|false"`
-`for="true|false"`
-`against="true|false"`
-`difference="true|false"`
-`points="true|false"`
-`myteam=""` - Team must mactch the name as its shown in the table (eg 'crystal palace). *Not case sensitive*
-`credit="true|false"`
-`limit="0|n"`
+`country="eng|sco|nor"
+league="{pl|ch|l1|l2}|{spl|sch|sl1|sl2}|{nor1}"
+played="true|false"
+won="true|false"
+drawn="true|false"
+lost="true|false"
+for="true|false"
+against="true|false"
+difference="true|false"
+points="true|false"
+myteam="" - Team must mactch the name as its shown in the table (eg 'crystal palace). *Not case sensitive*
+credit="true|false"
+limit="0|n"`
 
 == Use ==
 
@@ -110,10 +110,10 @@ I'd be really happy to [hear from you] if you use the plugin. I'd also appreciat
 = 0.4.4 =
 NEW LEAGUES ADDED:
 
-- Scotland
-—- Premiership, Championship, League One and League Two
-- Norway
-—- Tippeligaen
+* Scotland
+** Premiership, Championship, League One and League Two
+* Norway
+** Tippeligaen
 
 Norway? Thats right, Norway. A Customer asked if I would add the Tippeligaen and I obliged. Are there any leagues you’d like to see? Please let me know over on [my website] 
 
